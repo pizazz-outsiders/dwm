@@ -69,58 +69,62 @@ static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 
+/**
+ * upvol 增加音量
+ * downvol 降低音量
+ * mutevol 开启/关闭静音
+ */
+static const char *upvol[] = { "/home/aaron/.dwm/vol/vol-up.sh", NULL };
+static const char *downvol[] = { "/home/aaron/.dwm/vol/vol-down.sh", NULL };
+static const char *mutevol[] = { "/home/aaron/.dwm/vol/vol-toggle.sh", NULL };
+
+// 切换壁纸
+static const char *wallhavenautotoggle[] = { "/home/aaron/.dwm/wallhaven/setup.sh", NULL };
+
+
 static const Key keys[] = {
 	/* modifier                     key            function        argument */
+	/* modifier                     key            function        argument */
+	// 菜单
 	{ MODKEY,                       XK_p,          spawn,          {.v = dmenucmd } },
+	// 终端
 	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd } },
+	// 设置主窗口
 	{ MODKEY|ShiftMask,             XK_Return,     zoom,           {0} },
+	// 浮动终端
 	{ MODKEY,                       XK_apostrophe, togglescratch,  {.v = scratchpadcmd } },
-
+	// 关闭窗口
 	{ MODKEY|ShiftMask,             XK_q,      killclient,           {0} },
+	// 关闭DWM
 	{ MODKEY|ShiftMask|ControlMask, XK_c,      quit,     {0} },
-
+	// 关闭状态栏
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	// 移动光标
 	{ MODKEY,                       XK_j,      focusstackvis,  {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstackvis,  {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_j,      focusstackhid,  {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      focusstackhid,  {.i = -1 } },
+	// 纵向分屏
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+	// 横向分屏
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } },
-	{ MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } },
-	{ MODKEY|Mod4Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } },
-	{ MODKEY|Mod4Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
-	{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
-	{ MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_y,      incrohgaps,     {.i = +1 } },
-	{ MODKEY|Mod4Mask,              XK_o,      incrohgaps,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	// 打开和关闭间隙
+	{ MODKEY|ShiftMask,              XK_0,      togglegaps,     {0} },
+	{ MODKEY|ControlMask|ShiftMask,  XK_0,      defaultgaps,    {0} },
+	// 隐藏/显示窗口
+	{ MODKEY,                       XK_s,      showall,        {0} },
+	{ MODKEY,                       XK_h,      hide,           {0} },
+	// 音量
+	{ MODKEY|ShiftMask,             XK_a,      spawn,          {.v = downvol} },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = upvol} },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = mutevol} },
+	{ MODKEY,                       XK_r,      spawn,          {.v = wallhavenautotoggle}},
+
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_s,      show,           {0} },
-	{ MODKEY|ShiftMask,             XK_s,      showall,        {0} },
-	{ MODKEY,                       XK_h,      hide,           {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
